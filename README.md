@@ -17,7 +17,7 @@ flowchart TD
     B --> C{Jackpot > $1 Billion?}
     C -->|No| D[End - No Action Taken]
     C -->|Yes| E[Scrape Historical Data<br/>Past 10 Years of Results]
-    E --> F[Analyze Number Frequencies<br/>White Balls & Powerball]
+    E --> F[Analyze Number <br/>Frequencies<br/> of White Balls & Powerball]
     F --> G[Generate Prediction<br/>Based on Historical Patterns]
     G --> H[Send to IFTTT Webhook<br/>POST Request with Prediction]
     H --> I[IFTTT Applet Triggered]
