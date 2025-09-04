@@ -23,10 +23,10 @@ flowchart TD
     H --> I[IFTTT Applet Triggered]
     I --> J[Push Notification Sent<br/>to Mobile Device]
     
-    style A fill:#e1f5fe
-    style C fill:#fff3e0
-    style D fill:#ffebee
-    style J fill:#e8f5e8
+    style A fill:#4CAF50,stroke:#2E7D32,stroke-width:2px,color:#fff
+    style C fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:#fff
+    style D fill:#F44336,stroke:#C62828,stroke-width:2px,color:#fff
+    style J fill:#2196F3,stroke:#1565C0,stroke-width:2px,color:#fff
 ```
 
 ## How It Works
