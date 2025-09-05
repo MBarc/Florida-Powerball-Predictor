@@ -15,7 +15,7 @@ def fetch_current_jackpot():
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Accept-Encoding': 'gzip, deflate'  # This tells the server we can handle compression
+        'Accept-Encoding': 'identity'  # Request uncompressed content
     }
     
     resp = requests.get(url, headers=headers)
@@ -23,10 +23,31 @@ def fetch_current_jackpot():
     print(f"Content-Encoding: {resp.headers.get('content-encoding', 'none')}")
     print(f"Content-Type: {resp.headers.get('content-type', 'none')}")
     
-    soup = BeautifulSoup(resp.text, 'html.parser')
+    # Handle Brotli compression if server still sends it
+    content_encoding = resp.headers.get('content-encoding', '').lower()
+    if content_encoding == 'br':
+        print("Detected Brotli compression, decompressing...")
+        try:
+            import brotli
+            decompressed = brotli.decompress(resp.content)
+            text_content = decompressed.decode('utf-8')
+            print("Successfully decompressed Brotli content")
+        except ImportError:
+            print("Brotli library not available, trying manual approach...")
+            # Fallback: request again with different headers
+            headers['Accept-Encoding'] = 'gzip, deflate'
+            resp = requests.get(url, headers=headers)
+            text_content = resp.text
+        except Exception as e:
+            print(f"Decompression failed: {e}")
+            text_content = resp.text
+    else:
+        text_content = resp.text
+    
+    soup = BeautifulSoup(text_content, 'html.parser')
     
     print("=== PARSED HTML STRUCTURE ===")
-    print(soup.prettify())
+    print(soup.prettify()[:2000])  # Only show first 2000 chars to avoid spam
     print("=== END HTML STRUCTURE ===")
     
     span = soup.find('span', class_='game-jackpot-number')
