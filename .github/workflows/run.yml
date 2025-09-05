@@ -10,6 +10,7 @@ on:
 jobs:
   check-powerball:
     runs-on: ubuntu-latest
+    timeout-minutes: 15  # Kill job if it takes longer than 15 minutes
     
     steps:
     - name: Checkout code
@@ -33,19 +34,27 @@ jobs:
     - name: Install ChromeDriver
       uses: nanasess/setup-chromedriver@v2
       
-    - name: Run Powerball predictor
+    - name: Configure Chrome for GitHub Actions
+      run: |
+        # Add additional Chrome flags for better performance in CI
+        export CHROME_FLAGS="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-extensions --disable-plugins --disable-images --disable-javascript --remote-debugging-port=9222"
+        echo "CHROME_FLAGS=$CHROME_FLAGS" >> $GITHUB_ENV
+        
+    - name: Run Powerball predictor with timeout
+      timeout-minutes: 10
       env:
         IFTTT_WEBHOOK_URL: ${{ secrets.IFTTT_WEBHOOK_URL }}
+        CHROME_FLAGS: ${{ env.CHROME_FLAGS }}
       run: |
         export DISPLAY=:99
         cd src
-        python main.py
+        timeout 600 python main.py  # 10 minute timeout for the script itself
         
     - name: Upload logs on failure
       if: failure()
       uses: actions/upload-artifact@v4
       with:
-        name: error-logs
+        name: error-logs-${{ github.run_number }}
         path: |
           *.log
           /tmp/*.log
