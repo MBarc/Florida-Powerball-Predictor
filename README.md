@@ -80,11 +80,17 @@ IFTTT notification sent successfully!
 
 ```
 powerball-predictor/
-├── main.py              # Main orchestration script
-├── dataGatherer.py      # Web scraping and data collection
-├── predictNumbers.py    # Prediction algorithm
-├── notifier.py          # IFTTT notification system
-└── README.md           # This file
+├── .github/
+│   └── workflows/
+│       └── run.yml    # GitHub Actions workflow for automated execution
+├── src/
+│   ├── main.py                    # Main orchestration script and entry point
+│   ├── dataGatherer.py           # Web scraping module for historical Powerball data
+│   ├── predictNumbers.py         # Prediction algorithm using frequency analysis
+│   └── notifier.py              # IFTTT webhook notification system
+├── requirements.txt              # Python dependencies
+├── README.md                    # Project documentation
+└── LICENSE                      # MIT license (optional)
 ```
 
 ## Limitations & Disclaimers
