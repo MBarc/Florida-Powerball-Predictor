@@ -23,10 +23,12 @@ def fetch_current_jackpot():
     print(f"Content-Encoding: {resp.headers.get('content-encoding', 'none')}")
     print(f"Content-Type: {resp.headers.get('content-type', 'none')}")
     
-    print("=== FULL HTML RESPONSE ===")
-    print(resp.text)
-    print("=== END HTML RESPONSE ===")
     soup = BeautifulSoup(resp.text, 'html.parser')
+    
+    print("=== PARSED HTML STRUCTURE ===")
+    print(soup.prettify())
+    print("=== END HTML STRUCTURE ===")
+    
     span = soup.find('span', class_='game-jackpot-number')
     if span:
         jackpot_str = span.get_text(strip=True)
