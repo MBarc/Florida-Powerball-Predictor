@@ -1,4 +1,8 @@
-# 🎰 Florida Powerball Predictor 🎰
+<p align="center">
+  <img src="pics/PowerballPredictorLogo.png" alt="Project Logo" width="200"/>
+</p>
+
+<h1 align="center">🎰 Florida Powerball Predictor 🎰</h1>
 
 An automated Powerball number prediction system that analyzes historical lottery data to generate predictions and sends notifications when jackpots exceed $1 billion.
 
