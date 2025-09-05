@@ -43,30 +43,6 @@ cd powerball-predictor
 pip install -r requirements.txt
 ```
 
-## Usage
-
-### Run the complete system:
-```bash
-python main.py
-```
-
-### Individual components:
-
-**Collect historical data:**
-```bash
-python dataGatherer.py
-```
-
-**Generate predictions (requires data):**
-```bash
-python predictNumbers.py
-```
-
-**Test notifications:**
-```bash
-python notifier.py
-```
-
 ## Example Output
 
 ```
