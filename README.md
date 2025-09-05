@@ -90,7 +90,7 @@ powerball-predictor/
 │   └── notifier.py              # IFTTT webhook notification system
 ├── requirements.txt              # Python dependencies
 ├── README.md                    # Project documentation
-└── LICENSE                      # MIT license (optional)
+└── LICENSE                      # MIT license
 ```
 
 ## Limitations & Disclaimers
