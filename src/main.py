@@ -13,6 +13,8 @@ def fetch_current_jackpot():
     resp = requests.get(url)
     print(resp.status_code)
 
+    print(resp.txt)
+
     soup = BeautifulSoup(resp.text, 'html.parser')
     span = soup.find('span', class_='game-jackpot-number')
     if span:
