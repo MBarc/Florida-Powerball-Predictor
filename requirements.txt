@@ -9,3 +9,6 @@ numpy==1.24.3
 
 # Additional dependencies for selenium
 webdriver-manager==4.0.1
+
+# Compression support
+brotli==1.1.0
