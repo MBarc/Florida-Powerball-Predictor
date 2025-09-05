@@ -38,7 +38,8 @@ jobs:
         IFTTT_WEBHOOK_URL: ${{ secrets.IFTTT_WEBHOOK_URL }}
       run: |
         export DISPLAY=:99
-        python src/main.py
+        cd src
+        python main.py
         
     - name: Upload logs on failure
       if: failure()
