@@ -10,11 +10,18 @@ def fetch_current_jackpot():
     Returns jackpot as a string (e.g., "$1.40 Billion").
     """
     url = "https://www.powerball.com/api/v1/estimates/powerball"
-    resp = requests.get(url)
-    print(resp.status_code)
     
-    # Fix encoding issue
-    resp.encoding = 'utf-8'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate'  # This tells the server we can handle compression
+    }
+    
+    resp = requests.get(url, headers=headers)
+    print(resp.status_code)
+    print(f"Content-Encoding: {resp.headers.get('content-encoding', 'none')}")
+    print(f"Content-Type: {resp.headers.get('content-type', 'none')}")
     
     print("=== FULL HTML RESPONSE ===")
     print(resp.text)
