@@ -36,38 +36,12 @@ flowchart TD
 3. **Jackpot Monitoring** (`main.py`): Checks current jackpot and triggers system when threshold is met
 4. **Notifications** (`notifier.py`): Sends predictions via IFTTT webhooks
 
-## Installation
-
-### Prerequisites
-- Python 3.7+
-- Chrome browser
-- ChromeDriver
-
 ### Setup
 ```bash
 git clone https://github.com/yourusername/powerball-predictor.git
 cd powerball-predictor
 pip install -r requirements.txt
 ```
-
-### Required Dependencies
-```
-pandas
-selenium
-beautifulsoup4
-requests
-numpy
-```
-
-## Configuration
-
-### IFTTT Setup
-1. Create an IFTTT account and set up a webhook trigger
-2. Replace the webhook URL in `notifier.py` with your own IFTTT webhook URL
-3. Configure your preferred notification method (email, SMS, etc.) in IFTTT
-
-### ChromeDriver
-Ensure ChromeDriver is installed and accessible in your PATH, or update the driver path in `dataGatherer.py`.
 
 ## Usage
 
@@ -135,21 +109,12 @@ powerball-predictor/
 
 ## Limitations & Disclaimers
 
-⚠️ **Important**: This project is for educational and entertainment purposes only. Lottery numbers are random, and past results do not influence future drawings. This system cannot predict actual winning numbers.
+⚠️ **Important**: This project is for educational and entertainment purposes only.
 
 - Requires stable internet connection for web scraping
 - ChromeDriver compatibility needed for Selenium
-- Rate limiting may affect data collection speed
+- Rate limiting may affect data collection speed or may cause script to fail
 - IFTTT webhook has usage limits
-
-## Future Enhancements
-
-- [ ] Add support for other lottery games (Mega Millions, etc.)
-- [ ] Implement more sophisticated ML models (neural networks, regression)
-- [ ] Add data visualization dashboard
-- [ ] Create Slack/Discord notification options
-- [ ] Add historical prediction accuracy tracking
-- [ ] Implement database storage for long-term data retention
 
 ## Contributing
 
