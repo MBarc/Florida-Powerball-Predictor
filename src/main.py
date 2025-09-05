@@ -23,23 +23,18 @@ def fetch_current_jackpot():
     print(f"Content-Encoding: {resp.headers.get('content-encoding', 'none')}")
     print(f"Content-Type: {resp.headers.get('content-type', 'none')}")
     
-    # Handle Brotli compression if server still sends it
+    # Handle compression more gracefully
     content_encoding = resp.headers.get('content-encoding', '').lower()
     if content_encoding == 'br':
-        print("Detected Brotli compression, decompressing...")
+        print("Detected Brotli compression, attempting decompression...")
         try:
             import brotli
             decompressed = brotli.decompress(resp.content)
             text_content = decompressed.decode('utf-8')
             print("Successfully decompressed Brotli content")
-        except ImportError:
-            print("Brotli library not available, trying manual approach...")
-            # Fallback: request again with different headers
-            headers['Accept-Encoding'] = 'gzip, deflate'
-            resp = requests.get(url, headers=headers)
-            text_content = resp.text
         except Exception as e:
-            print(f"Decompression failed: {e}")
+            print(f"Brotli decompression failed: {e}")
+            print("Using original response text as fallback")
             text_content = resp.text
     else:
         text_content = resp.text
@@ -47,7 +42,7 @@ def fetch_current_jackpot():
     soup = BeautifulSoup(text_content, 'html.parser')
     
     print("=== PARSED HTML STRUCTURE ===")
-    print(soup.prettify()[:2000])  # Only show first 2000 chars to avoid spam
+    print(soup.prettify()[:2000])  # Only show first 2000 chars
     print("=== END HTML STRUCTURE ===")
     
     span = soup.find('span', class_='game-jackpot-number')
