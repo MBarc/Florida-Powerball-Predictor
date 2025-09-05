@@ -40,11 +40,13 @@ flowchart TD
 3. **Jackpot Monitoring** (`main.py`): Checks current jackpot and triggers system when threshold is met
 4. **Notifications** (`notifier.py`): Sends predictions via IFTTT webhooks
 
-### Setup
+### Local Setup
 ```bash
-git clone https://github.com/yourusername/powerball-predictor.git
-cd powerball-predictor
+git clone https://github.com/MBarc/Florida-Powerball-Predictor.git
+cd Florida-Powerball-Predictor
 pip install -r requirements.txt
+cd src
+python main.py
 ```
 
 ## Example Output
