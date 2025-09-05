@@ -48,7 +48,7 @@ jobs:
       run: |
         export DISPLAY=:99
         cd src
-        timeout 600 python main.py  # 10 minute timeout for the script itself
+        timeout 1500 python main.py  # 25 minute timeout for the script itself
         
     - name: Upload logs on failure
       if: failure()
