@@ -12,9 +12,13 @@ def fetch_current_jackpot():
     url = "https://www.powerball.com/api/v1/estimates/powerball"
     resp = requests.get(url)
     print(resp.status_code)
-
+    
+    # Fix encoding issue
+    resp.encoding = 'utf-8'
+    
+    print("=== FULL HTML RESPONSE ===")
     print(resp.text)
-
+    print("=== END HTML RESPONSE ===")
     soup = BeautifulSoup(resp.text, 'html.parser')
     span = soup.find('span', class_='game-jackpot-number')
     if span:
