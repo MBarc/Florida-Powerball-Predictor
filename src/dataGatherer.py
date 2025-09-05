@@ -10,6 +10,8 @@ import tempfile
 def fetch_and_parse_powerball():
     # --- Selenium setup ---
     options = Options()
+    options.add_argument("--headless")  # Add this line
+    options.add_argument("--disable-gpu")  # Add this line
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-extensions")
     options.add_argument("--disable-plugins") 
@@ -23,11 +25,9 @@ def fetch_and_parse_powerball():
     options.add_argument("--disable-features=VizDisplayCompositor")
     
     driver = webdriver.Chrome(options=options)
-
     driver.get("https://www.powerball.com/previous-results?gc=powerball")
-
     ten_years_ago = datetime.today() - timedelta(days=365*10)
-
+    
     # Click "Load More" until we have 10 years of data
     while True:
         html = driver.page_source
@@ -51,32 +51,27 @@ def fetch_and_parse_powerball():
             time.sleep(1)
         except:
             break
-
+            
     # Final parse
     html = driver.page_source
     driver.quit()
     soup = BeautifulSoup(html, "html.parser")
-
     records = []
-
+    
     for card in soup.select("a.card"):
         # Date
         date_text = card.select_one("h5.card-title").get_text(strip=True)
         date_obj = datetime.strptime(date_text, "%a, %b %d, %Y")
         if date_obj < ten_years_ago:
             continue
-
         # Numbers
         balls = card.select("div.form-control.item-powerball")
         numbers = [b.get_text(strip=True) for b in balls[:5]]
         powerball = balls[5].get_text(strip=True) if len(balls) > 5 else ""
-
         # Power Play
         pp_elem = card.select_one("span.power-play .multiplier")
         powerplay = pp_elem.get_text(strip=True) if pp_elem else ""
-
         week_num = date_obj.isocalendar()[1]
-
         records.append({
             "date": date_obj.strftime("%Y-%m-%d"),
             "day_of_week": date_obj.strftime("%a"),
@@ -85,16 +80,11 @@ def fetch_and_parse_powerball():
             "powerball": powerball,
             "powerplay": powerplay
         })
-
+        
     df = pd.DataFrame(records)
-
     if df.empty:
         raise ValueError("There was an error fetching Powerball data! Were you rate limited?")
-
     return df
 
 if __name__ == "__main__":
     fetch_and_parse_powerball()
-
-
-
