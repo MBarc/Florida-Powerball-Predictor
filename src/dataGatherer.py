@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import time
+import tempfile
 
 def fetch_and_parse_powerball():
     # --- Selenium setup ---
@@ -17,6 +18,15 @@ def fetch_and_parse_powerball():
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--no-sandbox")
     options.add_argument("--log-level=3")
+    options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+    options.add_argument("--disable-web-security")
+    options.add_argument("--disable-features=VizDisplayCompositor")
+
+    temp_dir = tempfile.mkdtemp()
+    options.add_argument(f"--user-data-dir={temp_dir}")
+    
+    print(f"🔧 Using temp directory: {temp_dir}")
+    
     driver = webdriver.Chrome(options=options)
 
     driver.get("https://www.powerball.com/previous-results?gc=powerball")
@@ -90,4 +100,5 @@ def fetch_and_parse_powerball():
 
 if __name__ == "__main__":
     fetch_and_parse_powerball()
+
 
